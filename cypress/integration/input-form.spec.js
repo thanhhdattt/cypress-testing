@@ -26,7 +26,7 @@
 //Learning only, don't run this specs, please...
 
 function courseTesting(purpose, username, password, expected_test_result){
-    baseUrl = 'http://oasis.uet.vnu.edu.vn/#/login';
+    baseUrl = 'https://courses.uet.vnu.edu.vn';
 
     it(purpose, () => {
         cy.visit(baseUrl);
@@ -50,11 +50,20 @@ function courseTesting(purpose, username, password, expected_test_result){
         }
 
         if(expected_test_result) {
-            cy.get('https://courses.uet.vnu.edu.vn/alternateLogin/index.php?errorcode=3')
-              .should('not.exist');
+            cy.url()
+              .should('not.eq', 'https://courses.uet.vnu.edu.vn/alternateLogin/index.php?errorcode=3');
         } else {
-            cy.get('https://courses.uet.vnu.edu.vn/alternateLogin/index.php?errorcode=3')
-              .should('exist');
+            cy.url()
+              .should('eq', 'https://courses.uet.vnu.edu.vn/alternateLogin/index.php?errorcode=3');
         }
     })
+    describe('All fields are correct', () => {
+        courseTesting(
+          'All fields are correct',
+          '18020294',
+          'hihahiho',
+          true,
+        )
+    });
+    describe('field check', () => {})
 }
